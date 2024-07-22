@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Duty Schedule</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            margin-top: 50px;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .form-group.required .col-form-label:after {
+            content:" *";
+            color:red;
+        }
+        h2 {
+            margin-bottom: 30px;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+        .form-section {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- <h2 class="text-center"></h2> -->
+        <div class="card-header bg-primary text-white text-center position-relative">
+            <a class="text-white" href="../../index.html"><i class="material-icons position-absolute" style="left: 10px; top: 50%; transform: translateY(-50%);">arrow_back</i></a>
+            <h3>Duty Schedule</h3>
+            <i class="material-icons position-absolute" style="right: 10px; top: 50%; transform: translateY(-50%);">person</i>
+        </div>
+        <form id="dutyScheduleForm">
+            <div class="form-section">
+                
+                <div class="form-group required">
+                    <label for="officerID" class="col-form-label">Officer ID</label>
+                    <input type="text" class="form-control" id="officerID" name="officerID" required>
+                </div>
+                <div class="form-group required">
+                    <label for="officerName" class="col-form-label">Officer Name</label>
+                    <input type="text" class="form-control" id="officerName" name="officerName" required>
+                </div>
+                <div class="form-group required">
+                    <label for="area" class="col-form-label">Area</label>
+                    <input type="text" class="form-control" id="area" name="area" required>
+                </div>
+                <div class="form-group required">
+                    <label for="duty" class="col-form-label">Duty</label>
+                    <input type="text" class="form-control" id="duty" name="duty" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6 required">
+                        <label for="dutyTimeFrom" class="col-form-label">Duty Time From</label>
+                        <input type="time" class="form-control" id="dutyTimeFrom" name="dutyTimeFrom" required>
+                    </div>
+                    <div class="form-group col-md-6 required">
+                        <label for="dutyTimeTo" class="col-form-label">Duty Time To</label>
+                        <input type="time" class="form-control" id="dutyTimeTo" name="dutyTimeTo" required>
+                    </div>
+                </div>
+                <div class="form-group required">
+                    <label for="contact" class="col-form-label">Contact</label>
+                    <input type="tel" class="form-control" id="contact" name="contact" required pattern="\d{10}">
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block">Submit</button>
+        </form>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        document.getElementById('dutyScheduleForm').addEventListener('submit', function(event) {
+            var form = event.target;
+            if (!form.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+                alert('Please fill out all required fields correctly.');
+            }
+            form.classList.add('was-validated');
+        }, false);
+    </script>
+</body>
+</html>

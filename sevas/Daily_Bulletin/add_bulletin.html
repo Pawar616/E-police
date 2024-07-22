@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Bulletin</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            margin-top: 50px;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .form-group.required .col-form-label:after {
+            content:" *";
+            color:red;
+        }
+        h2 {
+            margin-bottom: 30px;
+            font-weight: 700;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+        .form-section {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- <h2 class="text-center"></h2> -->
+        <div class="card-header bg-primary text-white text-center position-relative">
+            <a class="text-white" href="../../index.html"><i class="material-icons position-absolute" style="left: 10px; top: 50%; transform: translateY(-50%);">arrow_back</i></a>
+            <h3>Daily Bulletin</h3>
+            <i class="material-icons position-absolute" style="right: 10px; top: 50%; transform: translateY(-50%);">person</i>
+        </div>
+        <form id="dailyBulletinForm" class="needs-validation" novalidate>
+            <div class="form-section">
+                <div class="form-group required">
+                    <label for="headline" class="col-form-label">Headline</label>
+                    <input type="text" class="form-control" id="headline" name="headline" required>
+                    <div class="invalid-feedback">Please enter a headline.</div>
+                </div>
+                <div class="form-group required">
+                    <label for="img" class="col-form-label">Image</label>
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="img" name="img" required>
+                        <label class="custom-file-label" for="img">Choose file</label>
+                        <div class="invalid-feedback">Please upload an image.</div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6 required">
+                        <label for="date" class="col-form-label">Date</label>
+                        <input type="date" class="form-control" id="date" name="date" required>
+                        <div class="invalid-feedback">Please select a date.</div>
+                    </div>
+                    <div class="form-group col-md-6 required">
+                        <label for="time" class="col-form-label">Time</label>
+                        <input type="time" class="form-control" id="time" name="time" required>
+                        <div class="invalid-feedback">Please select a time.</div>
+                    </div>
+                </div>
+                <div class="form-group required">
+                    <label for="report" class="col-form-label">Report</label>
+                    <textarea class="form-control" id="report" name="report" rows="5" required></textarea>
+                    <div class="invalid-feedback">Please enter the report details.</div>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block">Submit</button>
+        </form>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        // Example starter JavaScript for disabling form submissions if there are invalid fields
+        (function() {
+            'use strict';
+            window.addEventListener('load', function() {
+                // Fetch all the forms we want to apply custom Bootstrap validation styles to
+                var forms = document.getElementsByClassName('needs-validation');
+                // Loop over them and prevent submission
+                var validation = Array.prototype.filter.call(forms, function(form) {
+                    form.addEventListener('submit', function(event) {
+                        if (form.checkValidity() === false) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
+                        form.classList.add('was-validated');
+                    }, false);
+                });
+
+                // Update the label of the custom file input with the selected file name
+                $('.custom-file-input').on('change', function(event) {
+                    var inputFile = event.currentTarget;
+                    $(inputFile).parent()
+                        .find('.custom-file-label')
+                        .html(inputFile.files[0].name);
+                });
+            }, false);
+        })();
+    </script>
+</body>
+</html>

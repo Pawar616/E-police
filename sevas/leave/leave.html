@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leave Application</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="card">
+            <div class="card-header bg-primary text-white text-center position-relative">
+                <i class="material-icons position-absolute" style="left: 10px; top: 50%; transform: translateY(-50%);">arrow_back</i>
+                <h4>Leave Application</h4>
+                <i class="material-icons position-absolute" style="right: 10px; top: 50%; transform: translateY(-50%);">person</i>
+            </div>
+            <div class="card-body">
+                <form id="leaveForm">
+                    <div class="form-group">
+                        <label for="id_number">ID Number</label>
+                        <input type="text" id="id_number" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="fromDate">From Date</label>
+                        <div class="input-group">
+                            <input type="date" id="fromDate" class="form-control">
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                    <input type="checkbox" id="secondHalfFrom">
+                                    <label for="secondHalfFrom" class="mb-0 ml-2">2nd Half</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="toDate">To Date</label>
+                        <div class="input-group">
+                            <input type="date" id="toDate" class="form-control">
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                    <input type="checkbox" id="firstHalfTo">
+                                    <label for="firstHalfTo" class="mb-0 ml-2">1st Half</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="reason">Reason</label>
+                        <textarea id="reason" class="form-control" rows="3"></textarea>
+                    </div>
+                    <div class="form-group text-center">
+                        <button type="button" class="btn btn-secondary">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Next</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#leaveForm').on('submit', function(e) {
+                e.preventDefault();
+                var formData = {
+                    id_number: $('#id_number').val(),
+                    fromDate: $('#fromDate').val(),
+                    secondHalfFrom: $('#secondHalfFrom').is(':checked'),
+                    toDate: $('#toDate').val(),
+                    firstHalfTo: $('#firstHalfTo').is(':checked'),
+                    reason: $('#reason').val()
+                };
+                $.ajax({
+                    url: 'YOUR_WEB_APP_URL', // Replace with your Web App URL
+                    method: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(formData),
+                    success: function(response) {
+                        alert('Data submitted successfully');
+                    },
+                    error: function(error) {
+                        alert('Failed to submit data');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

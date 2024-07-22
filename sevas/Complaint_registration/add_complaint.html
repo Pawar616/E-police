@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Police Complaint Registration Form</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            margin-top: 50px;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .form-group.required .col-form-label:after {
+            content:" *";
+            color:red;
+        }
+        h2 {
+            margin-bottom: 30px;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+        .form-section {
+            margin-bottom: 20px;
+        }
+    </style>
+
+<script>
+    function submitForm() {
+        var form = document.getElementById('complaintForm');
+        var formData = new FormData(form);
+        
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', form.action);
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                alert('Form submitted successfully');
+                form.reset();
+            } else {
+                alert('Failed to submit form');
+            }
+        };
+        xhr.send(formData);
+    }
+</script>
+</head>
+<body>
+    <div class="container">
+        <div class="card-header bg-primary text-white text-center position-relative">
+           <a class="text-white" href="../../index.html"> <i class="material-icons position-absolute" style="left: 10px; top: 50%; transform: translateY(-50%);">arrow_back</i></a>
+        <h3 class="text-center">Police Complaint Registration Form</h3>
+            <i class="material-icons position-absolute" style="right: 10px; top: 50%; transform: translateY(-50%);">person</i>
+        </div>
+        <form id="complaintForm"  action="https://script.google.com/macros/s/AKfycbzrxjpr2iNxPKU1hdxUbFvWWBYEH8N3hLg1QG-EIxdAtaLBZsUBQXYPX83u3G6eM1bF/exec"  method="post">
+            <div class="form-section">
+                <div class="form-group required">
+                    <label for="applicantName" class="col-form-label">Applicant Name</label>
+                    <input type="text" class="form-control" id="applicantName" name="applicantName" required>
+                </div>
+                <div class="form-group required">
+                    <label for="applicantAddress" class="col-form-label">Applicant Address</label>
+                    <textarea class="form-control" id="applicantAddress" name="applicantAddress" rows="3" required></textarea>
+                </div>
+                <div class="form-group required">
+                    <label for="applicantContact" class="col-form-label">Applicant Contact</label>
+                    <input type="text" class="form-control" id="applicantContact" name="applicantContact" required pattern="\d{10}">
+                </div>
+                <div class="form-group required">
+                    <label for="todaysDate" class="col-form-label">Today's Date</label>
+                    <input type="date" class="form-control" id="todaysDate" name="todaysDate" required>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <div class="form-group required">
+                    <label for="complaintSubject" class="col-form-label">Complaint Subject</label>
+                    <input type="text" class="form-control" id="complaintSubject" name="complaintSubject" required>
+                </div>
+                <div class="form-group required">
+                    <label for="complaintDetails" class="col-form-label">Complaint in Detail</label>
+                    <textarea class="form-control" id="complaintDetails" name="complaintDetails" rows="5" required></textarea>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block">Submit</button>
+        </form>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        document.getElementById('complaintForm').addEventListener('submit', function(event) {
+            var form = event.target;
+            if (!form.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+                alert('Please fill out all required fields correctly.');
+            }
+            form.classList.add('was-validated');
+        }, false);
+    </script>
+</body>
+</html>

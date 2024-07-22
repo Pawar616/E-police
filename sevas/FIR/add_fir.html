@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online FIR Filing Form</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            margin-top: 50px;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .form-group.required .col-form-label:after {
+            content:" *";
+            color:red;
+        }
+        h2 {
+            margin-bottom: 30px;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+        .form-section {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- <h2 class="text-center">Online FIR </h2> -->
+        <div class="card-header bg-primary text-white text-center position-relative">
+            <a class="text-white" href="../../index.html"><i class="material-icons position-absolute" style="left: 10px; top: 50%; transform: translateY(-50%);">arrow_back</i></a>
+            <h3>Online FIR </h3>
+            <i class="material-icons position-absolute" style="right: 10px; top: 50%; transform: translateY(-50%);">person</i>
+        </div>
+        <form id="firForm">
+            <div class="form-section">
+                <div class="form-group required">
+                    <label for="firNo" class="col-form-label">FIR No.</label>
+                    <input type="text" class="form-control" id="firNo" name="firNo" required>
+                </div>
+                <div class="form-group required">
+                    <label for="policeStation" class="col-form-label">Police Station</label>
+                    <input type="text" class="form-control" id="policeStation" name="policeStation" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6 required">
+                        <label for="firDate" class="col-form-label">Date of FIR</label>
+                        <input type="date" class="form-control" id="firDate" name="firDate" required>
+                    </div>
+                    <div class="form-group col-md-6 required">
+                        <label for="firTime" class="col-form-label">Time of FIR</label>
+                        <input type="time" class="form-control" id="firTime" name="firTime" required>
+                    </div>
+                </div>
+                <div class="form-group required">
+                    <label for="act" class="col-form-label">Act</label>
+                    <input type="text" class="form-control" id="act" name="act" required>
+                </div>
+                <div class="form-group required">
+                    <label for="section" class="col-form-label">Section</label>
+                    <input type="text" class="form-control" id="section" name="section" required>
+                </div>
+                <div class="form-group required">
+                    <label for="placeOfOccurrence" class="col-form-label">Place of Occurrence</label>
+                    <input type="text" class="form-control" id="placeOfOccurrence" name="placeOfOccurrence" required>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h4 class="mt-4">Complaint Details</h4>
+                <div class="form-group required">
+                    <label for="complainantName" class="col-form-label">Name</label>
+                    <input type="text" class="form-control" id="complainantName" name="complainantName" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6 required">
+                        <label for="complainantDob" class="col-form-label">Date of Birth</label>
+                        <input type="date" class="form-control" id="complainantDob" name="complainantDob" required>
+                    </div>
+                    <div class="form-group col-md-6 required">
+                        <label for="complainantPhone" class="col-form-label">Phone No.</label>
+                        <input type="tel" class="form-control" id="complainantPhone" name="complainantPhone" required pattern="\d{10}">
+                    </div>
+                </div>
+                <div class="form-group required">
+                    <label for="complainantAddress" class="col-form-label">Address</label>
+                    <textarea class="form-control" id="complainantAddress" name="complainantAddress" rows="3" required></textarea>
+                </div>
+                <div class="form-group required">
+                    <label for="complainantAadhar" class="col-form-label">Aadhar No.</label>
+                    <input type="text" class="form-control" id="complainantAadhar" name="complainantAadhar" required pattern="\d{12}">
+                </div>
+            </div>
+
+            <div class="form-section">
+                <div class="form-group required">
+                    <label for="reasonDetails" class="col-form-label">Reason in Details</label>
+                    <textarea class="form-control" id="reasonDetails" name="reasonDetails" rows="5" required></textarea>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block">Submit</button>
+        </form>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        document.getElementById('firForm').addEventListener('submit', function(event) {
+            var form = event.target;
+            if (!form.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+                alert('Please fill out all required fields correctly.');
+            }
+            form.classList.add('was-validated');
+        }, false);
+    </script>
+</body>
+</html>

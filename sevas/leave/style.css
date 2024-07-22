@@ -1,0 +1,23 @@
+body {
+    background-color: #f8f9fa;
+}
+
+.card {
+    max-width: 500px;
+    margin: auto;
+}
+
+.card-header h4 {
+    margin: 0;
+}
+
+.input-group-text {
+    background-color: transparent;
+    border: none;
+}
+
+@media (min-width: 768px) {
+    .card {
+        max-width: 700px;
+    }
+}
