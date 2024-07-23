@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Duty Schedule</title>
+    <title>Police Complaint Registration Form</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
@@ -37,47 +37,62 @@
             margin-bottom: 20px;
         }
     </style>
+
+<script>
+    function submitForm() {
+        var form = document.getElementById('complaintForm');
+        var formData = new FormData(form);
+        
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', form.action);
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                alert('Form submitted successfully');
+                form.reset();
+            } else {
+                alert('Failed to submit form');
+            }
+        };
+        xhr.send(formData);
+    }
+</script>
 </head>
 <body>
     <div class="container">
-        <!-- <h2 class="text-center"></h2> -->
         <div class="card-header bg-primary text-white text-center position-relative">
             <a class="text-white" href="../../index.html"><i class="material-icons position-absolute" style="left: 10px; top: 50%; transform: translateY(-50%);">arrow_back</i></a>
             <h3>Duty Schedule</h3>
             <i class="material-icons position-absolute" style="right: 10px; top: 50%; transform: translateY(-50%);">person</i>
         </div>
-        <form id="dutyScheduleForm">
+        <h2 class="text-center"></h2>
+        <form id="complaintForm"  action="https://script.google.com/macros/s/AKfycbzrxjpr2iNxPKU1hdxUbFvWWBYEH8N3hLg1QG-EIxdAtaLBZsUBQXYPX83u3G6eM1bF/exec"  method="post">
             <div class="form-section">
-                
                 <div class="form-group required">
-                    <label for="officerID" class="col-form-label">Officer ID</label>
-                    <input type="text" class="form-control" id="officerID" name="officerID" required>
+                    <label for="applicantName" class="col-form-label">Applicant Name</label>
+                    <input type="text" class="form-control" id="applicantName" name="applicantName" required>
                 </div>
                 <div class="form-group required">
-                    <label for="officerName" class="col-form-label">Officer Name</label>
-                    <input type="text" class="form-control" id="officerName" name="officerName" required>
+                    <label for="applicantAddress" class="col-form-label">Applicant Address</label>
+                    <textarea class="form-control" id="applicantAddress" name="applicantAddress" rows="3" required></textarea>
                 </div>
                 <div class="form-group required">
-                    <label for="area" class="col-form-label">Area</label>
-                    <input type="text" class="form-control" id="area" name="area" required>
+                    <label for="applicantContact" class="col-form-label">Applicant Contact</label>
+                    <input type="text" class="form-control" id="applicantContact" name="applicantContact" required pattern="\d{10}">
                 </div>
                 <div class="form-group required">
-                    <label for="duty" class="col-form-label">Duty</label>
-                    <input type="text" class="form-control" id="duty" name="duty" required>
+                    <label for="todaysDate" class="col-form-label">Today's Date</label>
+                    <input type="date" class="form-control" id="todaysDate" name="todaysDate" required>
                 </div>
-                <div class="form-row">
-                    <div class="form-group col-md-6 required">
-                        <label for="dutyTimeFrom" class="col-form-label">Duty Time From</label>
-                        <input type="time" class="form-control" id="dutyTimeFrom" name="dutyTimeFrom" required>
-                    </div>
-                    <div class="form-group col-md-6 required">
-                        <label for="dutyTimeTo" class="col-form-label">Duty Time To</label>
-                        <input type="time" class="form-control" id="dutyTimeTo" name="dutyTimeTo" required>
-                    </div>
+            </div>
+
+            <div class="form-section">
+                <div class="form-group required">
+                    <label for="complaintSubject" class="col-form-label">Complaint Subject</label>
+                    <input type="text" class="form-control" id="complaintSubject" name="complaintSubject" required>
                 </div>
                 <div class="form-group required">
-                    <label for="contact" class="col-form-label">Contact</label>
-                    <input type="tel" class="form-control" id="contact" name="contact" required pattern="\d{10}">
+                    <label for="complaintDetails" class="col-form-label">Complaint in Detail</label>
+                    <textarea class="form-control" id="complaintDetails" name="complaintDetails" rows="5" required></textarea>
                 </div>
             </div>
 
@@ -90,7 +105,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
-        document.getElementById('dutyScheduleForm').addEventListener('submit', function(event) {
+        document.getElementById('complaintForm').addEventListener('submit', function(event) {
             var form = event.target;
             if (!form.checkValidity()) {
                 event.preventDefault();
