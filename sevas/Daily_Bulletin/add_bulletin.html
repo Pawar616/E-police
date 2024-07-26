@@ -5,9 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Daily Bulletin</title>
     <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <a href="https://script.google.com/macros/s/AKfycbz2aImqs3fc4v3UXUO3zRkCQmveczzr3F_-M_JjWbKGcPtoxcgDF8SUgRgpEm8v1PPYEQ/exec" target="_blank"></a> <!--Access the Web App --> 
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
             background-color: #f8f9fa;
@@ -38,16 +39,17 @@
             margin-bottom: 20px;
         }
     </style>
+
+
 </head>
 <body>
     <div class="container">
-        <!-- <h2 class="text-center"></h2> -->
         <div class="card-header bg-primary text-white text-center position-relative">
-            <a class="text-white" href="../../index.html"><i class="material-icons position-absolute" style="left: 10px; top: 50%; transform: translateY(-50%);">arrow_back</i></a>
-            <h3>Daily Bulletin</h3>
-            <i class="material-icons position-absolute" style="right: 10px; top: 50%; transform: translateY(-50%);">person</i>
-        </div>
-        <form id="dailyBulletinForm" class="needs-validation" novalidate>
+            <a class="text-white" href="../../index.html"> <i class="material-icons position-absolute" style="left: 10px; top: 50%; transform: translateY(-50%);">arrow_back</i></a>
+         <h3 class="text-center">Daily Bulletin</h3>
+             <i class="material-icons position-absolute" style="right: 10px; top: 50%; transform: translateY(-50%);">person</i>
+         </div>
+        <form id="dailyBulletinForm"  class="needs-validation" novalidate>
             <div class="form-section">
                 <div class="form-group required">
                     <label for="headline" class="col-form-label">Headline</label>
@@ -89,7 +91,39 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script>
+
+    <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-database.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/7.14.1-0/firebase.js"></script>
+    <!-- XLSX Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.2/xlsx.full.min.js"></script>
+
+    <script src="./DB.js" ></script>
+   
+</body>
+</html>
+<!-- <script>
+    function submitForm() {
+        var form = document.getElementById('dutyScheduleForm');
+        var formData = new FormData(form);
+        
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', form.action);
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                alert('Form submitted successfully');
+                form.reset();
+            } else {
+                alert('Failed to submit form');
+            }
+        };
+        xhr.send(formData);
+    }
+</script> -->
+
+
+
+ <!-- <script>
         // Example starter JavaScript for disabling form submissions if there are invalid fields
         (function() {
             'use strict';
@@ -116,6 +150,4 @@
                 });
             }, false);
         })();
-    </script>
-</body>
-</html>
+    </script> -->
