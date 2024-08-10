@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <title>Patrole Book</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            margin: 0;
+        }
+
+        .form-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"] {
+            margin-bottom: 15px;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <div class="card-header bg-primary text-white text-center position-relative">
+            <a class="text-white" href="../../index.html"> <i class="material-icons position-absolute" style="left: 10px; top: 50%; transform: translateY(-50%);">arrow_back</i></a>
+         <h3 class="text-center">
+            Patrol Book
+         </h3>
+             <i class="material-icons position-absolute" style="right: 10px; top: 50%; transform: translateY(-50%);">person</i>
+         </div>
+        <form id="dutyForm" onsubmit="handleSubmit(event)">
+            <label for="name">name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="vehicleno">vehicleno:</label>
+            <input type="text" id="vehicleno" name="vehicleno" required>
+
+            <label for="dutyTime">dutytime:</label>
+            <input type="text" id="dutytime" name="dutyTime" required>
+
+            <label for="contact">contact:</label>
+            <input type="text" id="contact" name="contact" required>
+
+            <label for="bnNo">bnno:</label>
+            <input type="text" id="bnNo" name="bnNo" required>
+
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+    <script>
+function handleSubmit(event) {
+    event.preventDefault();
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbxgTJ8Lm52rhVBJshw3aPxIkObf5ZrImVOR5cEiMHpgdSyANSk3UY9zCwHOeO2YPaK2/exec';
+    const form = event.target;
+    const formData = new URLSearchParams(new FormData(form));
+    
+    console.log([...formData.entries()]); // Log formData to check if all fields are included
+
+    fetch(scriptURL, {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data.status === 'Success') {
+            alert('फॉर्म यशस्वीपणे सबमिट केला गेला आहे.');
+            console.log('Success:', data);
+            window.location.reload();
+        } else {
+            alert('फॉर्म सबमिट करण्यात समस्या: ' + data.message);
+        }
+    })
+    .catch(error => {
+        alert('फॉर्म सबमिट करण्यात त्रुटी: ' + error.message);
+        console.error('Error:', error);
+    });
+}
+
+    </script>
+</body>
+</html>

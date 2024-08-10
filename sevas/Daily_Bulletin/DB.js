@@ -1,60 +1,71 @@
-// Your web app's Firebase configuration
+// Your Firebase configuration object
 const firebaseConfig = {
-  apiKey: "AIzaSyBDSDu3IRCTsJ95SEAIRLAGcjMkbj_aXO8",
-  authDomain: "dailybulletin-27d74.firebaseapp.com",
-  databaseURL: "https://dailybulletin-27d74-default-rtdb.firebaseio.com",
-  projectId: "dailybulletin-27d74",
-  storageBucket: "dailybulletin-27d74.appspot.com",
-  messagingSenderId: "359032685290",
-  appId: "1:359032685290:web:7fc135cb9e8d1f9d0e4d93"
+    apiKey: "AIzaSyBDSDu3IRCTsJ95SEAIRLAGcjMkbj_aXO8",
+    authDomain: "dailybulletin-27d74.firebaseapp.com",
+    databaseURL: "https://dailybulletin-27d74-default-rtdb.firebaseio.com",
+    projectId: "dailybulletin-27d74",
+    storageBucket: "dailybulletin-27d74.appspot.com",
+    messagingSenderId: "359032685290",
+    appId: "1:359032685290:web:7fc135cb9e8d1f9d0e4d93"
 };
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
-// Reference to your Firebase database
+// References to Firebase services
 var Dailybulletin = firebase.database().ref("Dailybulletin");
+var storageRef = firebase.storage().ref();
 
-// Form submit event listener
 document.getElementById("dailyBulletinForm").addEventListener("submit", submitForm);
 
 function submitForm(e) {
-  e.preventDefault();
+    e.preventDefault();
 
-  var headline = getElementVal("headline");
-  var img = getElementVal("img");
-  var date = getElementVal("date");
-  var time = getElementVal("time");
-  var report = getElementVal("report");
+    var headline = document.getElementById("headline").value;
+    var imgFile = document.getElementById("img").files[0];
+    var date = document.getElementById("date").value;
+    var time = document.getElementById("time").value;
+    var report = document.getElementById("report").value;
 
-  saveMessages(headline, img, date, time, report);
+    // Upload image to Firebase Storage
+    var imgName = new Date().getTime() + '-' + imgFile.name;
+    var uploadTask = storageRef.child('images/' + imgName).put(imgFile);
 
-  // Show the alert
-  var alertElement = document.querySelector(".alert");
-  if (alertElement) {
-      alertElement.style.display = "block";
-
-      // Hide the alert after 3 seconds
-      setTimeout(() => {
-          alertElement.style.display = "none";
-      }, 3000);
-  }
-
-  // Reset the form
-  document.getElementById("dailyBulletinForm").reset();
+    uploadTask.on('state_changed',
+        function(snapshot) {
+            // Handle upload progress if needed
+        },
+        function(error) {
+            console.error("Error uploading image: ", error);
+        },
+        function() {
+            uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+                saveMessages(headline, downloadURL, date, time, report).then(() => {
+                    window.location.href = 'display.html';
+                }).catch((error) => {
+                    console.error("Error saving message: ", error);
+                });
+            });
+        }
+    );
 }
 
-const saveMessages = (headline, img, date, time, report) => {
-  var newdailyBulletinForm = Dailybulletin.push();
-  newdailyBulletinForm.set({
-      headline: headline,
-      img: img,
-      date: date,
-      time: time,
-      report: report
-  });
-};
+function saveMessages(headline, imgURL, date, time, report) {
+    return new Promise((resolve, reject) => {
+        var newdailyBulletinForm = Dailybulletin.push();
+        newdailyBulletinForm.set({
+            headline: headline,
+            img: imgURL,
+            date: date,
+            time: time,
+            report: report
+        }, (error) => {
+            if (error) {
+                reject(error);
+            } else {
+                resolve();
+            }
+        });
+    });
+}
 
-const getElementVal = (id) => {
-  return document.getElementById(id).value;
-};

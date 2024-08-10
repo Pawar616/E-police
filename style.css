@@ -8,8 +8,8 @@ body {
 }
 
 .subtitle {
-    font-size: 1.2rem;
-    color: #ff9800;
+    font-size: 1.1rem;
+    color: #080f92;
     margin-bottom: 1rem;
 }
 
@@ -29,6 +29,9 @@ body {
     position: relative;
     color: white;
     text-decoration: none;
+}
+p{
+    font-weight:bold;
 }
 
 .icon i.material-icons {

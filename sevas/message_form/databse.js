@@ -12,50 +12,63 @@ const firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
-// Reference to your Firebase database
+// References to Firebase services
 var msgform = firebase.database().ref("msgform");
+var storageRef = firebase.storage().ref();
 
-// Form submit event listener
 document.getElementById("upload-form").addEventListener("submit", submitForm);
 
 function submitForm(e) {
-e.preventDefault();
+    e.preventDefault();
 
-var date = getElementVal("date");
-var message = getElementVal("message");
-var description = getElementVal("description");
-var img = getElementVal("img");
-var link = getElementVal("link");
+    var date = getElementVal("date");
+    var message = getElementVal("message");
+    var description = getElementVal("description");
+    var imgFile = document.getElementById("img").files[0];
+    var link = getElementVal("link");
 
-saveMessages(date, message, description, img, link);
+    // Upload image to Firebase Storage
+    var imgName = new Date().getTime() + '-' + imgFile.name;
+    var uploadTask = storageRef.child('images/' + imgName).put(imgFile);
 
-  // Show the alert
-var alertElement = document.querySelector(".alert");
-if (alertElement) {
-    alertElement.style.display = "block";
-
-      // Hide the alert after 3 seconds
-    setTimeout(() => {
-        alertElement.style.display = "none";
-    }, 3000);
+    uploadTask.on('state_changed',
+        function(snapshot) {
+            // Handle upload progress if needed
+        },
+        function(error) {
+            console.error("Error uploading image: ", error);
+        },
+        function() {
+            uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+                saveMessages(date, message, description, downloadURL, link).then(() => {
+                    window.location.href = 'display.html'; // Redirect to display page
+                }).catch((error) => {
+                    console.error("Error saving message: ", error);
+                });
+            });
+        }
+    );
 }
 
-  // Reset the form
-document.getElementById("upload-form").reset();
+function saveMessages(date, message, description, imgURL, link) {
+    return new Promise((resolve, reject) => {
+        var newMsgFormEntry = msgform.push();
+        newMsgFormEntry.set({
+            date: date,
+            message: message,
+            description: description,
+            img: imgURL,
+            link: link
+        }, (error) => {
+            if (error) {
+                reject(error);
+            } else {
+                resolve();
+            }
+        });
+    });
 }
 
-const saveMessages = (date, message, description, img, link) => {
-var newdailyuploadForm = msgform.push();
-newdailyuploadForm.set({
-    date: date,
-    message: message,
-    description: description,
-    img: img,
-    link: link
-    
-});
-};
-
-const getElementVal = (id) => {
-return document.getElementById(id).value;
-};
+function getElementVal(id) {
+    return document.getElementById(id).value;
+}

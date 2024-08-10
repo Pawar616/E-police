@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Display Data</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        body {
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+        }
+        .card {
+            margin-bottom: 20px;
+            height: 30rem;
+            overflow-y: hidden;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 16px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            flex: 1 1 calc(33.333% - 32px); /* Responsive flex basis */
+            display: flex;
+            flex-direction: column;
+        }
+        .card-title {
+            font-size: 1.2em;
+            margin-bottom: 8px;
+            color: #007bff;
+        }
+        .card-text {
+            font-size: 1em;
+            color: #6c757d;
+        }
+        .center {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .hidden {
+            display: none;
+        }
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 2s linear infinite;
+            display: inline-block;
+        }
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+        .message {
+            font-size: 1.2em;
+            margin-top: 8px;
+        }
+        .save {
+            width: 100%;
+            max-width: 200px;
+            height: 50px;
+            font-weight: bold;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        @media only screen and (max-width: 600px) {
+            .card {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="center">
+            <button id="showDataBtn" class="btn btn-primary save" onclick="fetchData()">Show Orderly Room</button>
+            <div id="loading" class="hidden">
+                <div class="spinner"></div>
+                <div class="message">Please wait...</div>
+            </div>
+        </div>
+        <div class="row mt-2 d-flex flex-wrap" id="cards-container"></div>
+    </div>
+
+    <script>
+        function fetchData() {
+            const button = document.getElementById("showDataBtn");
+            const loading = document.getElementById("loading");
+
+            // Hide the button and show the loading message
+            button.classList.add("hidden");
+            loading.classList.remove("hidden");
+
+            fetch("https://script.google.com/macros/s/AKfycbyLOHjYVZ85R7N4UPJ3CL2wlTmCQl2MrCUurj3CRtlEUR3gzSwkcY4cqRoMRlrwTpyf/exec")
+                .then(response => response.json())
+                .then(data => {
+                    const container = document.getElementById("cards-container");
+                    container.innerHTML = ""; // Clear existing cards
+
+                    data.forEach(item => {
+                        const card = document.createElement("div");
+                        card.className = "col-md-6"; // Bootstrap column classes
+
+                        const cardInner = document.createElement("div");
+                        cardInner.className = "card";
+
+                        const cardBody = document.createElement("div");
+                        cardBody.className = "card-body";
+
+                        const formattedDate = formatDate(item.date);
+                        cardBody.innerHTML = `
+                            <h5 class="card-title">Name: ${item.name}</h5>
+                            <p class="card-text"><strong>ID:</strong> ${item.id}</p>
+                            <p class="card-text"><strong>Punishment:</strong>  by  ${item.punishment}</p>
+                            <p class="card-text"><strong>PR:</strong>${item.pr}</p>
+                            <p class="card-text"><strong>Charge:</strong> ${item.charge}</p>
+                            <p class="card-text"><strong>Date:</strong> ${formattedDate}</p>
+                            <p class="card-text"><strong>Remark:</strong> ${item.remark}</p>
+                        `;
+
+                        cardInner.appendChild(cardBody);
+                        card.appendChild(cardInner);
+                        container.appendChild(card);
+                    });
+
+                    // Hide the loading message
+                    loading.classList.add("hidden");
+                    button.classList.remove("hidden");
+                })
+                .catch(error => {
+                    console.error("Error fetching data:", error);
+                    loading.classList.add("hidden");
+                    button.classList.remove("hidden");
+                });
+        }
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            const day = String(date.getDate()).padStart(2, "0");
+            const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are zero-based
+            const year = date.getFullYear();
+            return `${day}/${month}/${year}`;
+        }
+    </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

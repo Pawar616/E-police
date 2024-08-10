@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Display Panchanama Reports</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .card-container {
+            margin-top: 20px;
+        }
+        .card {
+            margin-bottom: 20px;
+            border: 3px solid #007bff;
+            border-radius: 5px;
+        }
+        .card-body {
+
+        }
+        .card-title {
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+<div class="container card-container" id="cardContainer">
+    <!-- Cards will be dynamically inserted here -->
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        fetch('https://script.google.com/macros/s/AKfycbwbOBAbfbqpK7j-Ct5LOojgCI8Ek2vWdk_I4Od_CMra64am6skkSd46zdF6zhB13ckx/exec')
+        .then(response => response.json())
+        .then(data => {
+            const cardContainer = document.getElementById('cardContainer');
+            data.forEach(item => {
+                const card = document.createElement('div');
+                card.classList.add('card');
+
+                const cardBody = document.createElement('div');
+                cardBody.classList.add('card-body');
+
+                const formattedDate = new Date(item.date).toLocaleDateString();
+                const formattedTime = new Date(item.time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+                cardBody.innerHTML = `
+                    <h5 class="card-title">Police Station: ${item.policeStation}</h5>
+                    <p class="card-text"><strong>Officer In-Charge:</strong> ${item.officerInCharge}</p>
+                    <p class="card-text"><strong>Date:</strong> ${formattedDate}</p>
+                    <p class="card-text"><strong>Time:</strong> ${formattedTime}</p>
+                    <p class="card-text"><strong>Place:</strong> ${item.place}</p>
+                    <p class="card-text"><strong>Crime:</strong> ${item.crime}</p>
+                    <p class="card-text"><strong>Report in Detail:</strong> ${item.reportDetail}</p>
+                `;
+
+                card.appendChild(cardBody);
+                cardContainer.appendChild(card);
+            });
+        })
+        .catch(error => {
+            console.error('Error fetching data:', error);
+        });
+    });
+</script>
+</body>
+</html>

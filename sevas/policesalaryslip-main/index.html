@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Police Officer Form</title>
+    <script>
+        function handleSubmit(event) {
+            event.preventDefault();
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbxNDTHG_-32Q_cC30OJkFsDjai_Qz8qvxNFJG5qjZiquG3PX9163RPGPspmqS3rDUWw/exec';
+            const form = event.target;
+
+            fetch(scriptURL, {
+                method: 'POST',
+                body: new URLSearchParams(new FormData(form))
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'Success') {
+                    alert('फॉर्म यशस्वीपणे सबमिट केला गेला आहे.');
+                    console.log('Success:', data);
+                    window.location.reload();
+                
+                }
+                window.location.href = '';
+            })
+            
+            .catch(error => {
+                alert('फॉर्म सबमिट करण्यात त्रुटी: ' + error.message);
+            });
+        }
+    </script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .form-container {
+            width: 100%;
+            max-width: 500px;
+            background: white;
+            padding: 20px;
+            /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
+            border-radius: 8px;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        form label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        form input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Add Salary Details</h2>
+        <form id="officer-form" onsubmit="handleSubmit(event)">
+            <label for="name">Officer Name:</label>
+            <input type="text" id="name" name="name" required><br>
+
+            <label for="id">Officer ID:</label>
+            <input type="text" id="id" name="id" required><br>
+
+            <label for="contact">Contact Number:</label>
+            <input type="tel" id="contact" name="contact" required><br>
+
+            <label for="account">Account Number:</label>
+            <input type="text" id="account" name="account" required><br>
+
+            <label for="ifsc">IFSC Code:</label>
+            <input type="text" id="ifsc" name="ifsc" required><br>
+
+            <label for="bank">Bank Name:</label>
+            <input type="text" id="bank" name="bank" required><br>
+
+            <label for="date">Date:</label>
+            <input type="date" id="date" name="date" required><br>
+
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+</body>
+</html>

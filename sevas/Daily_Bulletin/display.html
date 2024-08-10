@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Bulletin Display</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .id-card-container {
+            width: 100%;
+            max-width: 800px;
+            margin: 20px;
+        }
+        .id-card {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .id-card img {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .id-card h2 {
+            margin: 10px 0;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .id-card p {
+            margin: 5px 0;
+            font-size: 16px;
+            text-align: center;
+        }
+        .id-card a {
+            color: #007BFF;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="id-card-container" id="bulletinCards"></div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+    <script>
+        // Your Firebase configuration object
+        const firebaseConfig = {
+            apiKey: "AIzaSyBDSDu3IRCTsJ95SEAIRLAGcjMkbj_aXO8",
+            authDomain: "dailybulletin-27d74.firebaseapp.com",
+            databaseURL: "https://dailybulletin-27d74-default-rtdb.firebaseio.com",
+            projectId: "dailybulletin-27d74",
+            storageBucket: "dailybulletin-27d74.appspot.com",
+            messagingSenderId: "359032685290",
+            appId: "1:359032685290:web:7fc135cb9e8d1f9d0e4d93"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        // Reference to the Dailybulletin node in the database
+        var Dailybulletin = firebase.database().ref("Dailybulletin");
+
+        // Fetch data and generate ID cards
+        Dailybulletin.on('value', function(snapshot) {
+            var bulletinCards = document.getElementById("bulletinCards");
+            bulletinCards.innerHTML = ""; // Clear existing cards
+
+            snapshot.forEach(function(childSnapshot) {
+                var childData = childSnapshot.val();
+                var cardHtml = `
+                    <div class="id-card">
+                        <img src="${childData.img}" alt="Image">
+                        <h2>${childData.headline}</h2>
+                        <p>${childData.report}</p>
+                        <p><small>${childData.date} ${childData.time}</small></p>
+                    </div>
+                `;
+                bulletinCards.innerHTML += cardHtml;
+            });
+        });
+    </script>
+</body>
+</html>

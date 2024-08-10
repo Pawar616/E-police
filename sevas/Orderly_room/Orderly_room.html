@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Panchanama Report</title>
+    <title>Orderly Room Form</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
     <style>
         body {
-            background-color: white;
+            background-color: #f8f9fa;
         }
         .container {
             margin-top: 20px;
@@ -34,53 +34,64 @@
         .btn-custom:hover {
             background-color: #0056b3;
         }
-        
     </style>
 </head>
 <body>
+
 <div class="container">
     <div class="form-section">
         <div class="container">
             <div class="card-header bg-primary text-white text-center position-relative">
-               <a class="text-white" href="./index.html"> <i class="material-icons position-absolute" style="left: 10px; top: 50%; transform: translateY(-50%);">arrow_back</i></a>
-            <h3 class="text-center">Add Panchanama Report</h3>
+               <a class="text-white" href="../../index.html"> <i class="material-icons position-absolute" style="left: 10px; top: 50%; transform: translateY(-50%);">arrow_back</i></a>
+            <h3 class="text-center">Orderly Room Form</h3>
                 <i class="material-icons position-absolute" style="right: 10px; top: 50%; transform: translateY(-50%);">person</i>
             </div>
         <h2 class="text-center"></h2>
-        <form id="panchanamaForm">
+        <form id="orderlyRoomForm">
             <div class="form-group">
-                <label for="policeStation">Police Station</label>
-                <input type="text" class="form-control" id="policeStation" placeholder="Enter Police Station">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" id="name" placeholder="Enter Name">
             </div>
 
             <div class="form-group">
-                <label for="officerInCharge">Officer In-Charge</label>
-                <input type="text" class="form-control" id="officerInCharge" placeholder="Enter Officer In-Charge">
+                <label for="id">ID</label>
+                <input type="text" class="form-control" id="id" placeholder="Enter ID">
             </div>
 
             <div class="form-group">
-                <label for="date">Date</label>
+                <label for="charge">Charge</label>
+                <input type="text" class="form-control" id="charge" placeholder="Enter Charge">
+            </div>
+
+            <div class="form-group">
+                <label>Minor Punishment</label>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="punishment" id="p_a_to_sp" value="p_a_to_sp">
+                    <label class="form-check-label" for="p_a_to_sp">
+                        By P.A. to S.P.
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="punishment" id="s_m_a_r" value="s_m_a_r">
+                    <label class="form-check-label" for="s_m_a_r">
+                        By S.M.A.R.
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="pr">PR (if any)</label>
+                <input type="text" class="form-control" id="pr" placeholder="Enter PR">
+            </div>
+
+            <div class="form-group">
+                <label for="date">Date on which order carried out</label>
                 <input type="date" class="form-control" id="date">
             </div>
 
             <div class="form-group">
-                <label for="time">Time</label>
-                <input type="time" class="form-control" id="time">
-            </div>
-
-            <div class="form-group">
-                <label for="place">Place (Full Address)</label>
-                <textarea class="form-control" id="place" rows="2" placeholder="Enter Place"></textarea>
-            </div>
-
-            <div class="form-group">
-                <label for="crime">Crime</label>
-                <input type="text" class="form-control" id="crime" placeholder="Enter Crime">
-            </div>
-
-            <div class="form-group">
-                <label for="reportDetail">Report in Detail</label>
-                <textarea class="form-control" id="reportDetail" rows="4" placeholder="Enter Report in Detail"></textarea>
+                <label for="remark">Remark</label>
+                <textarea class="form-control" id="remark" rows="4" placeholder="Enter Remarks"></textarea>
             </div>
 
             <div class="text-center">
@@ -94,20 +105,20 @@
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script>
-    document.getElementById('panchanamaForm').addEventListener('submit', function(event) {
+    document.getElementById('orderlyRoomForm').addEventListener('submit', function(event) {
         event.preventDefault();
 
         const formData = {
-            policeStation: document.getElementById('policeStation').value,
-            officerInCharge: document.getElementById('officerInCharge').value,
+            name: document.getElementById('name').value,
+            id: document.getElementById('id').value,
+            charge: document.getElementById('charge').value,
+            punishment: document.querySelector('input[name="punishment"]:checked')?.value || '',
+            pr: document.getElementById('pr').value,
             date: document.getElementById('date').value,
-            time: document.getElementById('time').value,
-            place: document.getElementById('place').value,
-            crime: document.getElementById('crime').value,
-            reportDetail: document.getElementById('reportDetail').value
+            remark: document.getElementById('remark').value
         };
 
-        fetch('https://script.google.com/macros/s/AKfycbywsZS1yZfV77CH0E0szbwP9PSYxVPVAB8yoZELS3RpfR3mE_W5tzNBsOkfr-DVpX-o/exec', {
+        fetch('https://script.google.com/macros/s/AKfycbw6qYnM2XfDOItrhru70oAjMsfa2Whm1q4SwSyJcwE1XxUsTSnhr5J2mURjlMcosfcC/exec', {
             method: 'POST',
             contentType: 'application/json',
             body: JSON.stringify(formData)
@@ -115,7 +126,7 @@
         .then(response => response.text())
         .then(result => {
             alert('Form submitted successfully!');
-            document.getElementById('panchanamaForm').reset();
+            document.getElementById('orderlyRoomForm').reset();
         })
         .catch(error => {
             alert('Error submitting form: ' + error);
@@ -124,4 +135,3 @@
 </script>
 </body>
 </html>
-
